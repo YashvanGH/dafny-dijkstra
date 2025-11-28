@@ -26,9 +26,9 @@ def dijkstra(graph: Graph, source: int):
     return dist, prev
                 
 def reconstruct_path(source: int, target: int, prev: List[int]) -> List[int]:
-    # Unreachable target
-    if prev[target] is None and target != source and prev[target] != -1:
-        return []  # no path
+    # # Unreachable target
+    # if prev[target] is None and target != source and prev[target] != -1:
+    #     return []  # no path
     
     path = []
     curr = target
@@ -36,6 +36,11 @@ def reconstruct_path(source: int, target: int, prev: List[int]) -> List[int]:
         path.append(curr)
         curr = prev[curr]
     path.reverse()
+
+    # unreachable
+    if path and path[0] != source:
+        return []
+
     return path
 
 def print_all_paths(source: int, dist: List[int], prev: List[int]):
@@ -47,18 +52,28 @@ def print_all_paths(source: int, dist: List[int], prev: List[int]):
             path_str = " -> ".join(map(str, path))
             print(f"Path from {source} -> {v}: {path_str}  (dist = {dist[v]})")
 
-    
 if __name__ == "__main__":
-    g = Graph(5)
-    g.add_edge(0, 1, 10)    # 0 -> 1 (weight 10)
-    g.add_edge(0, 4, 5)     # 0 -> 4 (weight 5)
-    g.add_edge(1, 2, 1)     # 1 -> 2 (weight 1)
-    g.add_edge(1, 4, 2)     # 1 -> 4 (weight 2)
-    g.add_edge(2, 3, 4)     # 2 -> 3 (weight 4)
-    g.add_edge(3, 0, 7)     # 3 -> 0 (weight 7)
-    g.add_edge(4, 1, 3)     # 4 -> 1 (weight 3)
-    g.add_edge(4, 2, 9)     # 4 -> 2 (weight 9)
-    g.add_edge(4, 3, 2)     # 4 -> 3 (weight 2)
+    g = Graph(3)
+    g.add_edge(0, 1, 1)
 
+    # Run Dijkstra from source 0
     dist, prev = dijkstra(g, 0)
     print_all_paths(0, dist, prev)
+
+
+
+    
+# if __name__ == "__main__":
+#     g = Graph(5)
+#     g.add_edge(0, 1, 10)    # 0 -> 1 (weight 10)
+#     g.add_edge(0, 4, 5)     # 0 -> 4 (weight 5)
+#     g.add_edge(1, 2, 1)     # 1 -> 2 (weight 1)
+#     g.add_edge(1, 4, 2)     # 1 -> 4 (weight 2)
+#     g.add_edge(2, 3, 4)     # 2 -> 3 (weight 4)
+#     g.add_edge(3, 0, 7)     # 3 -> 0 (weight 7)
+#     g.add_edge(4, 1, 3)     # 4 -> 1 (weight 3)
+#     g.add_edge(4, 2, 9)     # 4 -> 2 (weight 9)
+#     g.add_edge(4, 3, 2)     # 4 -> 3 (weight 2)
+
+#     dist, prev = dijkstra(g, 0)
+#     print_all_paths(0, dist, prev)
