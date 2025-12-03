@@ -13,7 +13,8 @@ module DijkstraLemmas {
     requires forall x :: 0 <= x < |distOld| ==> distNew[x] >= 0
     requires forall x :: 0 <= x < |distOld| ==> distOld[x] <= distNew[x]
     ensures distOld[v] <= distNew[v]
-  {}
+  {
+  }
 
   lemma RelaxationCorrect(G: Graph, u: int, v: int, distU: int)
     requires G.WellFormed()
@@ -22,7 +23,8 @@ module DijkstraLemmas {
     requires distU >= 0
     requires G.EdgeWeight(u, v) >= 0
     ensures distU + G.EdgeWeight(u, v) >= distU
-  {}
+  {
+  }
 
   predicate HasMinimalDistance(dist: seq<int>, visited: set<int>, u: int)
     requires 0 <= u < |dist|
@@ -34,5 +36,6 @@ module DijkstraLemmas {
     requires 0 <= u < |dist|
     requires HasMinimalDistance(dist, visited, u)
     ensures forall x :: 0 <= x < |dist| && x !in visited ==> dist[u] <= dist[x]
-  {}
+  {
+  }
 }
